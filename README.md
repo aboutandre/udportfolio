@@ -1,12 +1,6 @@
-## Website Performance Optimization portfolio project
+# Website Performance Optimization portfolio project
 
-Your challenge, if you wish to accept it (and we sure hope you will), is to optimize this online portfolio for speed! In particular, optimize the critical rendering path and make this page render as quickly as possible by applying the techniques you've picked up in the [Critical Rendering Path course](https://www.udacity.com/course/ud884).
-
-To get started, check out the repository, inspect the code,
-
-### Getting started
-
-Some useful tips to help you get started:
+## Getting started with the project
 
 1. Check out the repository
 1. To inspect the site on your phone, you can run a local server
@@ -17,6 +11,12 @@ Some useful tips to help you get started:
   ```
 
 1. Open a browser and visit localhost:8080
+1. Download and install [Grunt](http://gruntjs.com)
+1. Navigate in Terminal to the project's root directory.
+1. Install project dependencies with `npm install`.
+1. Run Grunt with `grunt`.
+
+### Optional
 1. Download and install [ngrok](https://ngrok.com/) to make your local server accessible remotely.
 
   ``` bash
@@ -24,42 +24,52 @@ Some useful tips to help you get started:
   $> ngrok 8080
   ```
 
-1. Copy the public URL ngrok gives you and try running it through PageSpeed Insights! [More on integrating ngrok, Grunt and PageSpeed.](http://www.jamescryer.com/2014/06/12/grunt-pagespeed-and-ngrok-locally-testing/)
+1. Copy the public URL ngrok gives you and try running it through PageSpeed Insights!
+[More on integrating ngrok, Grunt and PageSpeed.](http://www.jamescryer.com/2014/06/12/grunt-pagespeed-and-ngrok-locally-testing/)
 
-Profile, optimize, measure... and then lather, rinse, and repeat. Good luck!
 
-### Optimization Tips and Tricks
-* [Optimizing Performance](https://developers.google.com/web/fundamentals/performance/ "web performance")
-* [Analyzing the Critical Rendering Path](https://developers.google.com/web/fundamentals/performance/critical-rendering-path/analyzing-crp.html "analyzing crp")
-* [Optimizing the Critical Rendering Path](https://developers.google.com/web/fundamentals/performance/critical-rendering-path/optimizing-critical-rendering-path.html "optimize the crp!")
-* [Avoiding Rendering Blocking CSS](https://developers.google.com/web/fundamentals/performance/critical-rendering-path/render-blocking-css.html "render blocking css")
-* [Optimizing JavaScript](https://developers.google.com/web/fundamentals/performance/critical-rendering-path/adding-interactivity-with-javascript.html "javascript")
-* [Measuring with Navigation Timing](https://developers.google.com/web/fundamentals/performance/critical-rendering-path/measure-crp.html "nav timing api"). We didn't cover the Navigation Timing API in the first two lessons but it's an incredibly useful tool for automated page profiling. I highly recommend reading.
-* <a href="https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/eliminate-downloads.html">The fewer the downloads, the better</a>
-* <a href="https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/optimize-encoding-and-transfer.html">Reduce the size of text</a>
-* <a href="https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/image-optimization.html">Optimize images</a>
-* <a href="https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/http-caching.html">HTTP caching</a>
+## Optimizations
 
-### Customization with Bootstrap
-The portfolio was built on Twitter's <a href="http://getbootstrap.com/">Bootstrap</a> framework. All custom styles are in `dist/css/portfolio.css` in the portfolio repo.
+### PageSpeed Score
+The following optimizations were performed to achieve a score of 94 (mobile) and 96 (desktop) for index.html:
 
-* <a href="http://getbootstrap.com/css/">Bootstrap's CSS Classes</a>
-* <a href="http://getbootstrap.com/components/">Bootstrap's Components</a>
+1. JS and CSS are minified with Grunt
+4. JS code was moved to the bottom of the page. Google Analytics, `perfmatters.js` and webfont are loaded async.
+5. Critical CSS was inlined. `media="print"` was added to `print.css`
 
-### Sample Portfolios
+### Getting Rid of Jank
 
-Feeling uninspired by the portfolio? Here's a list of cool portfolios I found after a few minutes of Googling.
+Optmizations to `main.js`
 
-* <a href="http://www.reddit.com/r/webdev/comments/280qkr/would_anybody_like_to_post_their_portfolio_site/">A great discussion about portfolios on reddit</a>
-* <a href="http://ianlunn.co.uk/">http://ianlunn.co.uk/</a>
-* <a href="http://www.adhamdannaway.com/portfolio">http://www.adhamdannaway.com/portfolio</a>
-* <a href="http://www.timboelaars.nl/">http://www.timboelaars.nl/</a>
-* <a href="http://futoryan.prosite.com/">http://futoryan.prosite.com/</a>
-* <a href="http://playonpixels.prosite.com/21591/projects">http://playonpixels.prosite.com/21591/projects</a>
-* <a href="http://colintrenter.prosite.com/">http://colintrenter.prosite.com/</a>
-* <a href="http://calebmorris.prosite.com/">http://calebmorris.prosite.com/</a>
-* <a href="http://www.cullywright.com/">http://www.cullywright.com/</a>
-* <a href="http://yourjustlucky.com/">http://yourjustlucky.com/</a>
-* <a href="http://nicoledominguez.com/portfolio/">http://nicoledominguez.com/portfolio/</a>
-* <a href="http://www.roxannecook.com/">http://www.roxannecook.com/</a>
-* <a href="http://www.84colors.com/portfolio.html">http://www.84colors.com/portfolio.html</a>
+##### :424
+  -  Changed the slider value to a percent width
+
+##### :442
+  -  Resizing of pizza containers
+
+##### :463
+  -  Took the var 'pizzasDiv' out of the loop since it's the same always
+
+##### :497
+  -  moved document.body.scrollTop to variable to keep it DRY
+  -  this was brought outside the for loop because it's too costly inside
+
+##### :502
+  -  from querySelectorAll function by getElementsByClassName. As suggested [here](http://ryanmorr.com/abstract-away-the-performance-faults-of-queryselectorall/)
+
+##### :527
+  - Changed to requestAnimationFrame. As suggested [here](http://www.html5rocks.com/en/tutorials/speed/animations/)
+
+##### :536
+  - Reduced the pizzas from 200 to 30, 200 is overkill
+
+##### :538
+  - removed `width` and `height` attributes from JS
+
+## References used in this project
+- Udacity Forums
+- [Webcasts for the Website Optimization Project](https://classroom.udacity.com/nanodegrees/nd001/parts/00113454012/modules/273584856175462/lessons/5988439100/concepts/68921686960923)
+- [A smarter way to lear JS](http://www.asmarterwaytolearn.com/js/index-of-exercises.html)
+- [JavaScript for Experienced Developers - Web Workers](https://youtu.be/LrK5HudphWY?list=PLbonu14zWhwygypsRytY17MRUk2sTK8kP)
+- [Instant Loading with Service Workers (Chrome Dev Summit 2015)](https://youtu.be/jCKZDTtUA2A?list=PLbonu14zWhwygypsRytY17MRUk2sTK8kP)
+- [Eloquent JavaScript](http://eloquentjavascript.net/)
